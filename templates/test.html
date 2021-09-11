@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <title>Network Centre</title>
+</head>
+<body>
+    <header>
+        <h1>RV College of Engineering Network Centre</h1>
+        <figure>
+            <img src="{{url_for('static', filename='img/rvLogo.jpg')}}" alt="RVCE Logo" class="rvLogo">
+        </figure>
+    </header>
+    <h2>Working Cameras</h2>
+    {{Work|safe}}
+    <hr>
+    <h2>Offline Cameras</h2>
+    {{Nwork|safe}}
+</body>
+</html>
