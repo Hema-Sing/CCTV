@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/camera.css')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Centre</title>
+</head>
+<body>
+    <header>
+        <h1>RV College of Engineering Network Centre</h1>
+        <figure>
+            <img src="{{url_for('static', filename='img/rvLogo.jpg')}}" alt="RVCE Logo" class="rvLogo">
+        </figure>
+    </header>
+    <main>
+        <section>
+            <h2>Live Feed (Camera {{cameraNum|safe}})</h2>
+            <img src="{{ url_for('video_feed', camera=request.args.get('camera'))}}" class ="cameraFeed">
+        </section>
+    </main>
+</body>
+</html>

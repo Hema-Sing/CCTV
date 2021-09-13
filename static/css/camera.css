@@ -1,0 +1,14 @@
+section{
+    border: 1px solid rgb(0,0,0);
+    padding: 15px;
+}
+
+h2{
+    text-align: center;
+}
+
+.cameraFeed{
+    max-height: 80vh;
+    display: block;
+    margin: auto;
+}

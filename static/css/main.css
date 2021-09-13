@@ -65,3 +65,13 @@ form>button{
     color: rgb(255, 255, 255);
     cursor: pointer;
 }
+
+.cameraFeed{
+    max-height: 80vh;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(0,0,0);
+}
+

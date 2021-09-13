@@ -1,8 +1,9 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template, Response, request
 from flask.helpers import url_for
 import subprocess
 import platform
+import cv2 as cv
 app = Flask(__name__)
 
 def ping(host):
@@ -19,6 +20,19 @@ def ping(host):
 
     return subprocess.call(command) == 0
 
+def genFrames(cameraNum):
+   cameraNum -= 1
+   videoFeed = cv.VideoCapture(cameraNum)
+   while True:
+      isReceiving, frame = videoFeed.read()
+      if not isReceiving:
+         break
+      else:
+         ret, buffer = cv.imencode('.jpg', frame)
+         frame = buffer.tobytes()
+         yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
 @app.route('/')
 def index():
    return render_template('index.html')
@@ -30,13 +44,16 @@ def login():
 @app.route('/status')
 def status():
 
+   count = 0
    hosts = ["google.com", "asdfasdf.com"]
    working = ""
    notWorking = ""
    for host in hosts:
+      count += 1
       if(ping(host)):
-         working += '<div class="card">' + host + '</div>'
+         working += '<a href="camera?camera=' + str(count) + '"<div class="card">' + host + '</div></a>'
       else:
+         #insert email code here
          notWorking += '<div class="card">' + host + '</div>'
          
    return render_template('status.html', Work=working, Nwork=notWorking)
@@ -45,6 +62,15 @@ def status():
 @app.route('/main')
 def main():
    return render_template('main.html')
+
+@app.route('/camera')
+def camera():
+   return render_template('camera.html', cameraNum = request.args.get("camera"))
+
+@app.route('/video_feed')
+def video_feed():
+   cameraNum = int(request.args.get("camera"))
+   return Response(genFrames(cameraNum), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route("/cya")
 def cya():
