@@ -15,10 +15,20 @@
             <img src="{{url_for('static', filename='img/rvLogo.jpg')}}" alt="RVCE Logo" class="rvLogo">
         </figure>
     </header>
-    <h2>Working Cameras</h2>
-    {{Work|safe}}
+    <section>
+        <h2>Working Cameras</h2>
+        <div class="cameraList">
+            {{Work|safe}}
+        </div>
+    </section>
+    
     <hr>
-    <h2>Offline Cameras</h2>
-    {{Nwork|safe}}
+
+    <section>
+        <h2>Offline Cameras</h2>
+        <div class="cameraList">
+            {{Nwork|safe}}
+        </div>
+    </section>
 </body>
 </html>
