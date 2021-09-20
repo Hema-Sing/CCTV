@@ -20,6 +20,8 @@ cameraNumToIp = {
 online = ""
 offline = ""
 threads = []
+offlineHosts = []
+onlineHosts = []
 
 app.config['SECRET_KEY'] = 'top-secret!'
 app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
@@ -31,7 +33,7 @@ app.config['MAIL_DEFAULT_SENDER'] = "testnode13@gmail.com"
 mail = Mail(app)
 
 def send_mail(cam):
-    recipient = "testnode13@gmail.com"
+    recipient = "bsenthoor@gmail.com"
     msg = Message('Non Working Camera Information', recipients=[recipient])
 
     txt="Non working camera: "+cam
@@ -58,9 +60,20 @@ def ping(host, cameraNum):
 
     if subprocess.call(command) == 0:
         online += '<a href="camera?camera=' + str(cameraNum) + '"><div class="card">' + host + '</div></a>'
+        if host not in onlineHosts:
+            onlineHosts.append(host)
+        if host in offlineHosts:
+            offlineHosts.remove(host)
+        
+
     else:
         offline += '<div class="card">' + host + '</div>'
-        send_mail(host)
+        if host not in offlineHosts:
+            offlineHosts.append(host)
+            with app.app_context():
+                send_mail(host)
+        if host in onlineHosts:
+            onlineHosts.remove(host)
 
 
 def genFrames(cameraNum):
@@ -95,7 +108,7 @@ def status():
     online = ""
     offline = ""
     count = 0
-    hosts = ["google.com", "asdfasdf.com"]
+    hosts = ["google.com", "asdfasdf.com", "dkaflkghlkajdhf.com"]
 
     for host in hosts:
         count += 1
