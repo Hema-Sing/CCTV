@@ -26,8 +26,8 @@ app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'apikey'
-app.config['MAIL_PASSWORD'] = os.environ.get("API_KEY")
-app.config['MAIL_DEFAULT_SENDER'] = os.environ.get("DEFAULT")
+app.config['MAIL_PASSWORD'] = "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"
+app.config['MAIL_DEFAULT_SENDER'] = "testnode13@gmail.com"
 mail = Mail(app)
 
 def send_mail(cam):
@@ -60,6 +60,7 @@ def ping(host, cameraNum):
         online += '<a href="camera?camera=' + str(cameraNum) + '"><div class="card">' + host + '</div></a>'
     else:
         offline += '<div class="card">' + host + '</div>'
+        send_mail(host)
 
 
 def genFrames(cameraNum):
@@ -94,7 +95,7 @@ def status():
     online = ""
     offline = ""
     count = 0
-    hosts = ["google.com", "asdfasdf.com", "asdfasdf.com", "asdfasdf.com", "asdfasdf.com", "asdfasdf.com", "asdfasdf.com"]
+    hosts = ["google.com", "asdfasdf.com"]
 
     for host in hosts:
         count += 1
